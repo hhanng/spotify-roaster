@@ -1,0 +1,28 @@
+# Streamlit secrets (NEVER commit this)
+.streamlit/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.eggs/
+dist/
+build/
+
+# Virtual environments
+.venv/
+venv/
+env/
+.env
+
+# Spotipy token cache
+.cache
+.cache-*
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# IDEs
+.idea/
+.vscode/
