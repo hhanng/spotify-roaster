@@ -1,7 +1,7 @@
 import streamlit as st
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-import google.generativeai as genai
+from google import genai
 import time
 
 # ── Page config ──────────────────────────────────────────────────────────────
@@ -98,9 +98,7 @@ def get_valid_token():
 
 # ── Gemini roast generator ────────────────────────────────────────────────────
 def generate_roast(track_names: list[str]) -> str:
-    genai.configure(api_key=GEMINI_KEY)
-    model = genai.GenerativeModel("gemini-1.5-flash")
-
+    client = genai.Client(api_key=GEMINI_KEY)
     track_list = "\n".join(f"- {t}" for t in track_names)
     prompt = (
         "You are a savage but hilarious music critic who only speaks in Gen-Z slang. "
@@ -109,7 +107,10 @@ def generate_roast(track_names: list[str]) -> str:
         "Do NOT be mean about the artists themselves, only about what listening to them says about the person's personality and life choices.\n\n"
         f"Their top tracks:\n{track_list}"
     )
-    response = model.generate_content(prompt)
+    response = client.models.generate_content(
+        model="gemini-2.5-flash",
+        contents=prompt
+    )
     return response.text.strip()
 
 # ═══════════════════════════════════════════════════════════════════════════════
